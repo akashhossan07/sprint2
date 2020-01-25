@@ -1,11 +1,13 @@
 package com.example.sprint1;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -18,6 +20,8 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,8 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int currentPhotoIndex = 0;
     private ArrayList<String> photoGallery;
     String imageFileName;
-    EditText text_1;
-
+    EditText helloTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (photoGallery.size() > 0)
             currentPhotoPath = photoGallery.get(currentPhotoIndex);
         displayPhoto(currentPhotoPath);
+
     }
 
     private ArrayList<String> populateGallery(Date minDate, Date maxDate) {
@@ -100,11 +104,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void displayPhoto(String path) {
         ImageView iv = (ImageView) findViewById(R.id.ivGallery);
         iv.setImageBitmap(BitmapFactory.decodeFile(path));
-       // text_1 = (EditText) findViewById(R.id.caption);
-    //    text_1.setText( imageFileName,TextView.BufferType.EDITABLE);
+        helloTextView = (EditText) findViewById(R.id.editText3);
+        if(photoGallery.size()== 0){
+            helloTextView.setEnabled(false);
+        }
+        if (photoGallery.size() > 0) {
+            helloTextView.setEnabled(true);
+            // create object of Path
+            Path myPath = Paths.get(currentPhotoPath);
+            // call getFileName() and get FileName path object
+            Path fileName = myPath.getFileName();
+            helloTextView.setText(fileName.toString());
+            // text_1 = (EditText) findViewById(R.id.caption);
+            //    text_1.setText( imageFileName,TextView.BufferType.EDITABLE);
+        }
     }
 
 

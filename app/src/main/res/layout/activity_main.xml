@@ -50,5 +50,27 @@
         android:onClick="takePicture"
         android:text="snap" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="250dp"
+        android:editable="true" />
+
+    <EditText
+        android:id="@+id/editText3"
+        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="320dp"
+        android:background="@null"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:singleLine="false" />
+
 
 </RelativeLayout>
