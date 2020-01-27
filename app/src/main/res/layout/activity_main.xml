@@ -72,10 +72,24 @@
         android:layout_above="@+id/btnSnap"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
-        android:background="@null"
         android:ems="10"
         android:inputType="textPersonName"
-        android:singleLine="false" />
+        android:singleLine="false"
+        android:hint="Enter Caption Here"
+        />
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="162dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-25dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

@@ -11,6 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<String> photoGallery;
     String imageFileName;
     EditText helloTextView;
+    EditText timeIndication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,16 +112,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ImageView iv = (ImageView) findViewById(R.id.ivGallery);
         iv.setImageBitmap(BitmapFactory.decodeFile(path));
         helloTextView = (EditText) findViewById(R.id.editText3);
+        timeIndication = (EditText) findViewById(R.id.editText4);
         if(photoGallery.size()== 0){
             helloTextView.setEnabled(false);
+            timeIndication.setEnabled(false);
         }
         if (photoGallery.size() > 0) {
             helloTextView.setEnabled(true);
+            timeIndication.setEnabled(true);
             // create object of Path
-            Path myPath = Paths.get(currentPhotoPath);
+            final Path myPath = Paths.get(currentPhotoPath);
             // call getFileName() and get FileName path object
-            Path fileName = myPath.getFileName();
-            helloTextView.setText(fileName.toString());
+            final Path fileName = myPath.getFileName();
+            //helloTextView.setText(fileName.toString());
+            String []currentData = fileName.toString().split("_");
+            timeIndication.setText(currentData[1].toString());
+            
+
+
+            helloTextView.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    //NO CODE FOR THIS SECTION
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    //NO CODE FOR THIS SECTION
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    //MUST RENANME FILE AT THIS POST, S is our variable
+
+
+                    //File newFile = new File(fileName.toString());
+                    //File renFile = new File(s.toString()+".jpg");
+                    //newFile.renameTo(renFile);
+                    //String n = "Image_ _picture_.jpg";
+                    //Log.d("MyDebugTab" , n.toString());
+                    //String []newString = n.split("_");
+                    //Log.d("MyDebugTabMod" , newString[1].toString());
+                }
+            });
             // text_1 = (EditText) findViewById(R.id.caption);
             //    text_1.setText( imageFileName,TextView.BufferType.EDITABLE);
         }
@@ -187,9 +223,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
         //Get input from user
-        imageFileName = "JPEG_" + timeStamp + "_";
+        imageFileName = "JPEG_" + timeStamp + "_ _";
         //text_1.setText( imageFileName,TextView.BufferType.EDITABLE);
       //  imageFileName = text_1.getText().toString();
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
