@@ -80,7 +80,7 @@
 
     <EditText
         android:id="@+id/editText4"
-        android:layout_width="162dp"
+        android:layout_width="212dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView2"
         android:layout_centerHorizontal="true"
