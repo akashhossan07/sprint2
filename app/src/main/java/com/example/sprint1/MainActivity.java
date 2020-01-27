@@ -123,10 +123,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // create object of Path
             final Path myPath = Paths.get(currentPhotoPath);
             // call getFileName() and get FileName path object
-            final Path fileName = myPath.getFileName();
+            final Path filePath = myPath.getFileName();
             //helloTextView.setText(fileName.toString());
-            String []currentData = fileName.toString().split("_");
+            final String []currentData = myPath.toString().split("_");
             timeIndication.setText(currentData[1].toString());
+
+            if (currentData[2].length()>1){
+                helloTextView.setText(currentData[2]);
+            }
 
 
 
@@ -144,15 +148,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void afterTextChanged(Editable s) {
                     //MUST RENANME FILE AT THIS POST, S is our variable
+                    //
+                    File photo = new File(myPath.toString());
 
+                    //String fileName = photo.getName();
 
-                    //File newFile = new File(fileName.toString());
-                    //File renFile = new File(s.toString()+".jpg");
-                    //newFile.renameTo(renFile);
-                    //String n = "Image_ _picture_.jpg";
-                    //Log.d("MyDebugTab" , n.toString());
-                    //String []newString = n.split("_");
-                    //Log.d("MyDebugTabMod" , newString[1].toString());
+                    File newFile = new File(currentData[0] + "_" + currentData[1] + "_" + s.toString() + "_" + currentData[3]);
+
+                    photo.renameTo(newFile);
+
                 }
             });
             // text_1 = (EditText) findViewById(R.id.caption);
@@ -223,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyy MMMM dd").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyy MMMM dd hh:ss aa").format(new Date());
         //Get input from user
         imageFileName = "JPEG_" + timeStamp + "_ _";
         //text_1.setText( imageFileName,TextView.BufferType.EDITABLE);
