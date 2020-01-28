@@ -83,7 +83,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick( View v) {
-        switch (v.getId()) {
+        updatePhoto(currentPhotoPath, helloTextView.getText().toString());
+        Date minDate = new Date(Long.MIN_VALUE);
+        Date maxDate = new Date(Long.MAX_VALUE);
+        populateGallery(minDate,maxDate);
+
+            switch (v.getId()) {
             case R.id.btnLeft:
                 if(photoGallery.size() > 0) //SA
                 --currentPhotoIndex;
@@ -103,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             currentPhotoPath = photoGallery.get(currentPhotoIndex);
             Log.d("phpotoleft, size", Integer.toString(photoGallery.size()));
             Log.d("photoleft, index", Integer.toString(currentPhotoIndex));
+
+
             displayPhoto(currentPhotoPath);
         }
     }
@@ -128,13 +135,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final String []currentData = myPath.toString().split("_");
             timeIndication.setText(currentData[1].toString());
 
-            if (currentData[2].length()>1){
-                helloTextView.setText(currentData[2]);
-            }
+
+            helloTextView.setText(currentData[2]);
 
 
 
-            helloTextView.addTextChangedListener(new TextWatcher() {
+
+            /*helloTextView.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                     //NO CODE FOR THIS SECTION
@@ -149,18 +156,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void afterTextChanged(Editable s) {
                     //MUST RENANME FILE AT THIS POST, S is our variable
                     //
-                    File photo = new File(myPath.toString());
-
-                    //String fileName = photo.getName();
-
-                    File newFile = new File(currentData[0] + "_" + currentData[1] + "_" + s.toString() + "_" + currentData[3]);
-
-                    photo.renameTo(newFile);
+                    updatePhoto(currentPhotoPath,s.toString());
 
                 }
-            });
+            });*/
             // text_1 = (EditText) findViewById(R.id.caption);
             //    text_1.setText( imageFileName,TextView.BufferType.EDITABLE);
+        }
+    }
+
+    private void updatePhoto(String path, String caption) {
+        String[] attr = path.split("_");
+        if (attr.length >= 3) {
+            File to = new File(attr[0] + "_" + attr[1] + "_" + caption + "_" + attr[3]);
+            File from = new File(path);
+            from.renameTo(to);
+
         }
     }
 
