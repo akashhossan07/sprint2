@@ -11,14 +11,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,13 +28,13 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
   // static final int REQUEST_IMAGE_CAPTURE = 1;//SA
   //  String mCurrentPhotoPath;//SA
-   public static final int SEARCH_ACTIVITY_REQUEST_CODE = 0;
+    public static final int SEARCH_ACTIVITY_REQUEST_CODE = 0;
     static final int CAMERA_REQUEST_CODE = 1;
     private String currentPhotoPath = null;
     private int currentPhotoIndex = 0;
     private ArrayList<String> photoGallery;
     String imageFileName;
-    EditText helloTextView;
+    EditText photoCaption;
     EditText timeIndication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<String> populateGallery(Date minDate, Date maxDate) {
         File file = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath(), "/Android/data/com.example.sprint1/files/Pictures");
-        photoGallery = new ArrayList<String>();
+        photoGallery = new ArrayList <String>();
         File[] fList = file.listFiles();
         if (fList != null) {
             for (File f : file.listFiles()) {
@@ -83,11 +80,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick( View v) {
-        updatePhoto(currentPhotoPath, helloTextView.getText().toString());
+        updatePhoto(currentPhotoPath, photoCaption.getText().toString());
         Date minDate = new Date(Long.MIN_VALUE);
         Date maxDate = new Date(Long.MAX_VALUE);
         populateGallery(minDate,maxDate);
-
             switch (v.getId()) {
             case R.id.btnLeft:
                 if(photoGallery.size() > 0) //SA
@@ -118,60 +114,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void displayPhoto(String path) {
         ImageView iv = (ImageView) findViewById(R.id.ivGallery);
         iv.setImageBitmap(BitmapFactory.decodeFile(path));
-        helloTextView = (EditText) findViewById(R.id.editText3);
+        photoCaption = (EditText) findViewById(R.id.editText3);
         timeIndication = (EditText) findViewById(R.id.editText4);
         if(photoGallery.size()== 0){
-            helloTextView.setEnabled(false);
+            photoCaption.setEnabled(false);
             timeIndication.setEnabled(false);
         }
         if (photoGallery.size() > 0) {
-            helloTextView.setEnabled(true);
+            photoCaption.setEnabled(true);
             timeIndication.setEnabled(true);
             // create object of Path
             final Path myPath = Paths.get(currentPhotoPath);
             // call getFileName() and get FileName path object
             final Path filePath = myPath.getFileName();
-            //helloTextView.setText(fileName.toString());
+            //photoCaption.setText(fileName.toString());
             final String []currentData = myPath.toString().split("_");
             timeIndication.setText(currentData[1].toString());
 
 
-            helloTextView.setText(currentData[2]);
-
-
-
-
-            /*helloTextView.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    //NO CODE FOR THIS SECTION
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    //NO CODE FOR THIS SECTION
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    //MUST RENANME FILE AT THIS POST, S is our variable
-                    //
-                    updatePhoto(currentPhotoPath,s.toString());
-
-                }
-            });*/
-            // text_1 = (EditText) findViewById(R.id.caption);
-            //    text_1.setText( imageFileName,TextView.BufferType.EDITABLE);
+            photoCaption.setText(currentData[2]);
         }
     }
 
     private void updatePhoto(String path, String caption) {
+        //Check to see if there are photos in the gallery and if so, update the photo. //SA
+        if(currentPhotoIndex < photoGallery.size()) {
         String[] attr = path.split("_");
-        if (attr.length >= 3) {
-            File to = new File(attr[0] + "_" + attr[1] + "_" + caption + "_" + attr[3]);
-            File from = new File(path);
-            from.renameTo(to);
+            if (attr.length >= 3) {
+                File to = new File(attr[0] + "_" + attr[1] + "_" + caption + "_" + attr[3]);
+                File from = new File(path);
+                from.renameTo(to);
 
+            }
         }
     }
 
