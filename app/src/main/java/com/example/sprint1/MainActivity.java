@@ -37,9 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String imageFileName;
     EditText photoCaption;
     EditText timeIndication;
-    String Rabbuy;
-    // todo sfsd
-
+    // todo Neeed to fix the search command S.A
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -194,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == SEARCH_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Date startTimestamp, endTimestamp;
-                DateFormat format = new SimpleDateFormat("yyyy MMMM dd hh:mm aa");
+                DateFormat format = new SimpleDateFormat("yyyy MM dd hh:mm aa");
 
                 try {
                     String from = (String) data.getStringExtra("STARTTIMESTAMP");
