@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -17,7 +16,6 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static org.junit.Assert.*;
@@ -33,9 +31,9 @@ public class UICaptionSearchTest {
     public void TestFilter() {
         onView(withId(R.id.btnSearch)).perform(click());
         onView(withId(R.id.etFromDateTime)).perform(clearText());
-        onView(withId(R.id.etFromDateTime)).perform(typeText("2010 March 01 07:00 p.m."), closeSoftKeyboard());
+        onView(withId(R.id.etFromDateTime)).perform(typeText("2000/01/31"), closeSoftKeyboard());
         onView(withId(R.id.etToDateTime)).perform(clearText());
-        onView(withId(R.id.etToDateTime)).perform(typeText("2021 January 31 10:00 p.m."), closeSoftKeyboard());
+        onView(withId(R.id.etToDateTime)).perform(typeText("2021/01/31"), closeSoftKeyboard());
         onView(withId(R.id.etKeywords)).perform(typeText("ian"), closeSoftKeyboard());
         onView(withId(R.id.go)).perform(click());
         for (int i = 0; i <= 5; i++) {

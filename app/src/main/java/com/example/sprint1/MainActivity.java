@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == SEARCH_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Date startTimestamp, endTimestamp;
-                DateFormat format = new SimpleDateFormat("yyyy MM dd hh:mm aa");
+                DateFormat format = new SimpleDateFormat("yyyy:MM:dd HH:mm");
 
                 try {
                     String from = (String) data.getStringExtra("STARTTIMESTAMP");
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyy MMMM dd hh:mm aa").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm").format(new Date());
         //Get input from user
         imageFileName = "JPEG_" + timeStamp + "_ _";
         //text_1.setText( imageFileName,TextView.BufferType.EDITABLE);
