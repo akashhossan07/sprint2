@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText photoCaption;
     EditText timeIndication;
     String keywords = "";
-    // todo Neeed to fix the search command S.A
+    // todo this is the up to date file as 2:12PM Jan 31, 2020
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
