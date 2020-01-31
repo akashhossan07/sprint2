@@ -29,12 +29,15 @@ public class UICaptionSearchTest {
 
     @Test
     public void TestFilter() {
+        for (int i = 0; i <= 3; i++) {
+            onView(withId(R.id.btnRight)).perform(click());
+        }
         onView(withId(R.id.btnSearch)).perform(click());
         onView(withId(R.id.etFromDateTime)).perform(clearText());
         onView(withId(R.id.etFromDateTime)).perform(typeText("2008:10:01 23:11"), closeSoftKeyboard());
         onView(withId(R.id.etToDateTime)).perform(clearText());
         onView(withId(R.id.etToDateTime)).perform(typeText("2021:10:01 23:45"), closeSoftKeyboard());
-        onView(withId(R.id.etKeywords)).perform(typeText("sajjad"), closeSoftKeyboard());
+        onView(withId(R.id.etKeywords)).perform(typeText("computer"), closeSoftKeyboard());
         onView(withId(R.id.go)).perform(click());
         for (int i = 0; i <= 5; i++) {
             onView(withId(R.id.btnRight)).perform(click());

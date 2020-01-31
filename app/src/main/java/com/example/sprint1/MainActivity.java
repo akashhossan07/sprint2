@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             timeIndication.setText(currentData[1].toString());
 
             photoCaption.setText(currentData[2]);
+
         }
     }
 
