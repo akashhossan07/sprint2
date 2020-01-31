@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String imageFileName;
     EditText photoCaption;
     EditText timeIndication;
+    String Rabbuy;
+    // todo sfsd
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
