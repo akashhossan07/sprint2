@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
+        //todo it works but needs work
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             ImageView iv = (ImageView) findViewById(R.id.ivGallery);
             iv.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath));
