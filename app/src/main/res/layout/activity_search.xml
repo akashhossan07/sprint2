@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res‐auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SearchActivity">
+
+        <TextView
+            android:id="@+id/tvFromDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/btnCancel"
+            android:layout_alignBottom="@+id/etFromDateTime"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="-142dp"
+            android:layout_marginRight="180dp"
+            android:layout_marginBottom="0dp"
+            android:text="From: "
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/etFromDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="38dp"
+            android:layout_marginEnd="20dp"
+            android:ems="10"
+            android:inputType="date"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tvToDateTime" android:text="To: "
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_alignParentTop="true" android:layout_alignStart="@+id/tvFromDateTime"
+            android:layout_marginTop="98dp" android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/etToDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvToDateTime"
+            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="22dp"
+            android:ems="10"
+            android:inputType="date"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tvKeywords"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvFromDateTime"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="353dp"
+            android:text="Keywords: "
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/etKeywords" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignStart="@+id/go"
+            android:layout_centerVertical="true" android:ems="10"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="55dp"
+            android:layout_marginRight="55dp"
+            android:layout_marginBottom="139dp"
+            android:onClick="cancel"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/btnCancel"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="false"
+            android:layout_marginTop="-47dp"
+            android:layout_marginEnd="162dp"
+            android:layout_marginBottom="282dp"
+            android:onClick="go"
+            android:text="Go" />
+</RelativeLayout>
+
