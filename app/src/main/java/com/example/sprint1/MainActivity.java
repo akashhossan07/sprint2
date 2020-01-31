@@ -30,13 +30,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // static final int REQUEST_IMAGE_CAPTURE = 1;//SA
     //  String mCurrentPhotoPath;//SA
     public static final int SEARCH_ACTIVITY_REQUEST_CODE = 0;
-    static final int CAMERA_REQUEST_CODE = 1;
+    static final int CAMERA_REQUEST_CODE = 0;
     private String currentPhotoPath = null;
     private int currentPhotoIndex = 0;
     private ArrayList<String> photoGallery = null;
     String imageFileName;
     EditText photoCaption;
     EditText timeIndication;
+    String keywords = "";
     // todo Neeed to fix the search command S.A
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Log.d("min date is ", minDate.toString());
         Log.d("max date is", maxDate.toString());
-        photoGallery = populateGallery(minDate, maxDate, "");
+        photoGallery = populateGallery(minDate, maxDate, keywords);
         Log.d("onCreate, size", Integer.toString(photoGallery.size()));
         if (photoGallery.size() > 0)
             currentPhotoPath = photoGallery.get(currentPhotoIndex);
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updatePhoto(currentPhotoPath, photoCaption.getText().toString());
         Date minDate = new Date(Long.MIN_VALUE);
         Date maxDate = new Date(Long.MAX_VALUE);
-        photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "");
+        photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), keywords);
         switch (v.getId()) {
             case R.id.btnLeft:
                 if (photoGallery.size() > 0) //SA
@@ -204,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     endTimestamp = null;
                     System.out.println("Error ");
                 }
-               String keywords = (String) data.getStringExtra("KEYWORDS");
+               keywords = (String) data.getStringExtra("KEYWORDS");
                 currentPhotoIndex = 0;
                 photoGallery = populateGallery(startTimestamp, endTimestamp, keywords);
                 if (photoGallery.size() == 0) {
@@ -217,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             ImageView iv = (ImageView) findViewById(R.id.ivGallery);
             iv.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath));
-         photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "");
+         photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), keywords);
         }
     }
     private File createImageFile() throws IOException {
