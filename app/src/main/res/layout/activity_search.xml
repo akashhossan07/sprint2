@@ -29,7 +29,7 @@
             android:layout_marginTop="38dp"
             android:layout_marginEnd="20dp"
             android:ems="10"
-            android:inputType="date"
+            android:inputType="textNoSuggestions"
             android:textSize="24sp" />
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="22dp"
             android:ems="10"
-            android:inputType="date"
+            android:inputType="textNoSuggestions"
             android:textSize="24sp" />
 
         <TextView

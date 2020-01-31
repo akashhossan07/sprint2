@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // static final int REQUEST_IMAGE_CAPTURE = 1;//SA
     //  String mCurrentPhotoPath;//SA
     public static final int SEARCH_ACTIVITY_REQUEST_CODE = 0;
-    static final int CAMERA_REQUEST_CODE = 0;
+    static final int CAMERA_REQUEST_CODE = 1;
     private String currentPhotoPath = null;
     private int currentPhotoIndex = 0;
     private ArrayList<String> photoGallery = null;
@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final String[] currentData = myPath.toString().split("_");
             timeIndication.setText(currentData[1].toString());
 
-
             photoCaption.setText(currentData[2]);
         }
     }
@@ -219,8 +218,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             ImageView iv = (ImageView) findViewById(R.id.ivGallery);
             iv.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath));
-         photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), keywords);
+           photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "");
+           photoCaption.setText("");
         }
+
     }
     private File createImageFile() throws IOException {
         // Create an image file name
