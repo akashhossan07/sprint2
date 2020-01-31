@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             photoCaption.setEnabled(true);
             timeIndication.setEnabled(true);
             // create object of Path
-            final Path myPath = Paths.get(photoGallery.get(currentPhotoIndex));
+            final Path myPath = Paths.get(currentPhotoPath);
             // call getFileName() and get FileName path object
             final Path filePath = myPath.getFileName();
             //photoCaption.setText(fileName.toString());
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             iv.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath));
            photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "");
            photoCaption.setText("");
-            final Path myPath = Paths.get(photoGallery.get(currentPhotoIndex));
+            final Path myPath = Paths.get(currentPhotoPath);
             // call getFileName() and get FileName path object
             final Path filePath = myPath.getFileName();
             //photoCaption.setText(fileName.toString());
