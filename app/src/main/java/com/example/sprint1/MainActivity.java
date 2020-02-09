@@ -6,6 +6,7 @@ import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String imageFileName;
     EditText photoCaption;
     EditText timeIndication;
+    TextView latIndication;
+    TextView longIndication;
+
     String keywords = "";
     // todo this is the up to date file as 2:21PM Jan 31, 2020
     @Override
@@ -120,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         iv.setImageBitmap(BitmapFactory.decodeFile(path));
         photoCaption = (EditText) findViewById(R.id.editText3);
         timeIndication = (EditText) findViewById(R.id.editText4);
+        latIndication = (TextView) findViewById(R.id.lat);
+        longIndication = (TextView) findViewById(R.id.lon);
+
         if (photoGallery.size() == 0) {
             photoCaption.setEnabled(false);
             timeIndication.setEnabled(false);
@@ -136,6 +144,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             timeIndication.setText(currentData[1].toString());
 
             photoCaption.setText(currentData[2]);
+
+            try {
+                final ExifInterface location = new ExifInterface(currentPhotoPath);
+                Log.d("location", currentPhotoPath);
+                Log.d("Latitude", location.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF));
+                Log.d("Longitude", (location.getAttribute(ExifInterface.TAG_GPS_LONGITUDE)).toString());
+                latIndication.setText(location.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF) + " " + location.getAttribute(ExifInterface.TAG_GPS_LATITUDE));
+                longIndication.setText(location.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF) + " " + location.getAttribute(ExifInterface.TAG_GPS_LONGITUDE));
+            } catch (IOException e) {
+                //logger.info("Couldn't read exif info: " + e.getLocalizedMessage());
+            }
 
         }
     }
