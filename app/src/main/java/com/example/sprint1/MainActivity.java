@@ -54,6 +54,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView longIndication;
 
     String keywords = "";
+    String fromLatitude = "";
+    String toLatitude = "";
+    String fromLongitude = "";
+    String toLongitude = "";
+
+
     // todo this is the up to date file as 2:21PM Jan 31, 2020
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Log.d("min date is ", minDate.toString());
         Log.d("max date is", maxDate.toString());
-        photoGallery = populateGallery(minDate, maxDate, keywords);
+        photoGallery = populateGallery(minDate, maxDate, keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
         Log.d("onCreate, size", Integer.toString(photoGallery.size()));
         if (photoGallery.size() > 0)
             currentPhotoPath = photoGallery.get(currentPhotoIndex);
@@ -83,14 +89,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private ArrayList<String> populateGallery(Date minDate, Date maxDate,String keywords) {
+    private ArrayList<String> populateGallery(Date minDate, Date maxDate,String keywords, String fromLatitude, String toLatitude, String fromLongitude, String toLongitude) {
         File file = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath(), "/Android/data/com.example.sprint1/files/Pictures");
         photoGallery = new ArrayList<String>();
         File[] fList = file.listFiles();
         if (fList != null) {
             for (File f : fList) {
-                if (((minDate == null && maxDate == null) || (f.lastModified() >= minDate.getTime() && f.lastModified() <= maxDate.getTime())) && (keywords == "" || f.getPath().contains(keywords)))
+                String filePathData[] = f.getPath().toString().split("_");
+                double fromLatitudeNumber;
+                double toLatitudeNumber;
+                double fileLatitudeNumber;
+
+                double fromLongitudeNumber;
+                double toLongitudeNumber;
+                double fileLongitudeNumber;
+
+                try{
+                    fromLatitudeNumber = Float.parseFloat(fromLatitude);
+                } catch (Exception ex) {
+                    fromLatitudeNumber = -180;
+                }
+
+                try{
+                    toLatitudeNumber = Float.parseFloat(toLatitude);
+                } catch (Exception ex) {
+                    toLatitudeNumber = 180;
+                }
+
+                try{
+                    fileLatitudeNumber = Float.parseFloat(filePathData[3]);
+                } catch (Exception ex) {
+                    fileLatitudeNumber = 0;
+                }
+
+                try{
+                    fromLongitudeNumber = Float.parseFloat(fromLongitude);
+                } catch (Exception ex) {
+                    fromLongitudeNumber = -180;
+                }
+
+                try{
+                    toLongitudeNumber = Float.parseFloat(toLongitude);
+                } catch (Exception ex) {
+                    toLongitudeNumber = 180;
+                }
+
+                try{
+                    fileLongitudeNumber = Float.parseFloat(filePathData[4]);
+                } catch (Exception ex) {
+                    fileLongitudeNumber = 0;
+                }
+
+                Log.d("fuck", fromLatitudeNumber + "_" + toLatitudeNumber);
+                Log.d("fuckstring", fromLatitude + "_" + toLatitude);
+
+                if (((minDate == null && maxDate == null) || (f.lastModified() >= minDate.getTime() && f.lastModified() <= maxDate.getTime()))
+                        && (keywords == "" || f.getPath().contains(keywords))
+                        && ((fromLatitude == null && toLatitude == null) || (fileLatitudeNumber >= fromLatitudeNumber && fileLatitudeNumber <= toLatitudeNumber))
+                        && ((fromLongitude == null && toLongitude == null) || (fileLongitudeNumber >= fromLongitudeNumber && fromLongitudeNumber <= toLongitudeNumber)))
                     photoGallery.add(f.getPath());
             }
 
@@ -108,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updatePhoto(currentPhotoPath, photoCaption.getText().toString());
         Date minDate = new Date(Long.MIN_VALUE);
         Date maxDate = new Date(Long.MAX_VALUE);
-        photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), keywords);
+        photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
         switch (v.getId()) {
             case R.id.btnLeft:
                 if (photoGallery.size() > 0) //SA
@@ -245,14 +302,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                keywords = (String) data.getStringExtra("KEYWORDS");
 
-                String fromLat = (String) data.getStringExtra("STARTLATITUDE");
-                String toLat = (String) data.getStringExtra("ENDLATITUDE");
-                String fromLon = (String) data.getStringExtra("STARTLONGITUDE");
-                String toLon = (String) data.getStringExtra("ENDLONGITUDE");
+                fromLatitude = (String) data.getStringExtra("STARTLATITUDE");
+                toLatitude = (String) data.getStringExtra("ENDLATITUDE");
+                fromLongitude = (String) data.getStringExtra("STARTLONGITUDE");
+                toLongitude = (String) data.getStringExtra("ENDLONGITUDE");
 
 
                 currentPhotoIndex = 0;
-                photoGallery = populateGallery(startTimestamp, endTimestamp, keywords);
+                photoGallery = populateGallery(startTimestamp, endTimestamp, keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
                 if (photoGallery.size() == 0) {
                     displayPhoto(null);
                 } else {
@@ -264,7 +321,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             ImageView iv = (ImageView) findViewById(R.id.ivGallery);
             iv.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath));
-           photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "");
+           photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "", "", "", "", "");
            photoCaption.setText("");
             final Path myPath = Paths.get(currentPhotoPath);
             // call getFileName() and get FileName path object
