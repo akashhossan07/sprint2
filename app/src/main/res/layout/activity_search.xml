@@ -32,6 +32,58 @@
             android:inputType="textNoSuggestions"
             android:textSize="24sp" />
 
+        <EditText
+            android:id="@+id/fromLat"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="240dp"
+            android:ems="10"
+            android:inputType="textNoSuggestions"
+            android:text="From Latitude"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/toLon"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="190dp"
+            android:ems="10"
+            android:inputType="textNoSuggestions"
+            android:text="To Longitude"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/toLat"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="240dp"
+            android:ems="10"
+            android:inputType="textNoSuggestions"
+            android:text="To Latitude"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/fromLon"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="190dp"
+            android:ems="10"
+            android:inputType="textNoSuggestions"
+            android:text="From Longitude"
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/tvToDateTime" android:text="To: "
             android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -51,19 +103,36 @@
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/Location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvFromDateTime"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="13dp"
+            android:layout_marginBottom="293dp"
+            android:text="Location:"
+            android:textSize="24sp" />
+
+        <TextView
             android:id="@+id/tvKeywords"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/tvFromDateTime"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="14dp"
             android:layout_marginBottom="353dp"
             android:text="Keywords: "
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/etKeywords" android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_alignStart="@+id/go"
-            android:layout_centerVertical="true" android:ems="10"
+            android:id="@+id/etKeywords"
+            android:layout_width="244dp"
+            android:layout_height="32dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="353dp"
+            android:layout_toEndOf="@+id/tvKeywords"
+            android:ems="10"
             android:textSize="24sp" />
 
         <Button
@@ -74,7 +143,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="55dp"
             android:layout_marginRight="55dp"
-            android:layout_marginBottom="139dp"
+            android:layout_marginBottom="51dp"
             android:onClick="cancel"
             android:text="Cancel" />
 
@@ -82,13 +151,11 @@
             android:id="@+id/go"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/btnCancel"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="false"
-            android:layout_marginTop="-47dp"
-            android:layout_marginEnd="162dp"
-            android:layout_marginBottom="282dp"
+            android:layout_above="@+id/btnCancel"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="14dp"
             android:onClick="go"
             android:text="Go" />
+
 </RelativeLayout>
 
