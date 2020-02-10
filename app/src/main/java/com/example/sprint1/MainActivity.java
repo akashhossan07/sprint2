@@ -2,10 +2,12 @@ package com.example.sprint1;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
@@ -19,6 +21,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -28,6 +34,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     // static final int REQUEST_IMAGE_CAPTURE = 1;//SA
     //  String mCurrentPhotoPath;//SA
@@ -36,7 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String currentPhotoPath = null;
     private int currentPhotoIndex = 0;
     private ArrayList<String> photoGallery = null;
+    private FusedLocationProviderClient fusedLocationClient;
     String imageFileName;
+    String currentLatitude;
+    String currentLongiutde;
     EditText photoCaption;
     EditText timeIndication;
     TextView latIndication;
@@ -46,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // todo this is the up to date file as 2:21PM Jan 31, 2020
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActivityCompat.requestPermissions(this,new String[]{ACCESS_FINE_LOCATION}, 1);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button btnLeft = (Button) findViewById(R.id.btnLeft);
@@ -116,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("photoleft, index", Integer.toString(currentPhotoIndex));
 
             displayPhoto(currentPhotoPath);
+
+
         }
     }
 
@@ -144,17 +161,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             timeIndication.setText(currentData[1].toString());
 
             photoCaption.setText(currentData[2]);
+            latIndication.setText(currentData[3]);
+            longIndication.setText(currentData[4]);
 
-            try {
-                final ExifInterface location = new ExifInterface(currentPhotoPath);
-                Log.d("location", currentPhotoPath);
-                Log.d("Latitude", location.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF));
-                Log.d("Longitude", (location.getAttribute(ExifInterface.TAG_GPS_LONGITUDE)).toString());
-                latIndication.setText(location.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF) + " " + location.getAttribute(ExifInterface.TAG_GPS_LATITUDE));
-                longIndication.setText(location.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF) + " " + location.getAttribute(ExifInterface.TAG_GPS_LONGITUDE));
-            } catch (IOException e) {
+
+            //try {
+            //    final ExifInterface location = new ExifInterface(currentPhotoPath);
+            //    Log.d("location", currentPhotoPath);
+            //    Log.d("Latitude", location.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF));
+            //    Log.d("Longitude", (location.getAttribute(ExifInterface.TAG_GPS_LONGITUDE)).toString());
+            //    latIndication.setText(location.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF) + " " + location.getAttribute(ExifInterface.TAG_GPS_LATITUDE));
+            //    longIndication.setText(location.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF) + " " + location.getAttribute(ExifInterface.TAG_GPS_LONGITUDE));
+            //} catch (IOException e) {
                 //logger.info("Couldn't read exif info: " + e.getLocalizedMessage());
-            }
+            //}
 
         }
     }
@@ -163,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (currentPhotoIndex < photoGallery.size()) {
             String[] attr = path.split("_");
             if (attr.length >= 3) {
-                File to = new File(attr[0] + "_" + attr[1] + "_" + caption + "_" + attr[3]);
+                File to = new File(attr[0] + "_" + attr[1] + "_" + caption + "_" + attr[3] + "_" + attr[4]+ "_" + attr[5]);
                 File from = new File(path);
                 from.renameTo(to);
 
@@ -224,6 +244,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     System.out.println("Error ");
                 }
                keywords = (String) data.getStringExtra("KEYWORDS");
+
+                String fromLat = (String) data.getStringExtra("STARTLATITUDE");
+                String toLat = (String) data.getStringExtra("ENDLATITUDE");
+                String fromLon = (String) data.getStringExtra("STARTLONGITUDE");
+                String toLon = (String) data.getStringExtra("ENDLONGITUDE");
+
+
                 currentPhotoIndex = 0;
                 photoGallery = populateGallery(startTimestamp, endTimestamp, keywords);
                 if (photoGallery.size() == 0) {
@@ -254,7 +281,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm").format(new Date());
         //Get input from user
-        imageFileName = "JPEG_" + timeStamp + "_ _";
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if(location != null){
+                    currentLatitude = Double.toString(location.getLatitude());
+                    currentLongiutde = Double.toString(location.getLongitude());
+                }
+            }
+        });
+
+        imageFileName = "JPEG_" + timeStamp + "_ _" + currentLatitude + "_" + currentLongiutde + "_";
         //text_1.setText( imageFileName,TextView.BufferType.EDITABLE);
       //  imageFileName = text_1.getText().toString();
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
