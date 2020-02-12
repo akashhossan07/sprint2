@@ -328,7 +328,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final Path filePath = myPath.getFileName();
             //photoCaption.setText(fileName.toString());
             final String[] currentData = myPath.toString().split("_");
-            timeIndication.setText(currentData[1].toString());
+            timeIndication.setText(currentData[1]);
             photoCaption.setEnabled(true);
             timeIndication.setEnabled(true);
         }
@@ -339,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm").format(new Date());
         //Get input from user
 
-        fusedLocationClient.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
                 if(location != null){

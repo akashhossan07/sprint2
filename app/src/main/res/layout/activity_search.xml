@@ -120,17 +120,17 @@
             android:layout_alignStart="@+id/tvFromDateTime"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="14dp"
-            android:layout_marginBottom="353dp"
+            android:layout_marginBottom="348dp"
             android:text="Keywords: "
             android:textSize="24sp" />
 
         <EditText
             android:id="@+id/etKeywords"
-            android:layout_width="244dp"
-            android:layout_height="32dp"
+            android:layout_width="243dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="6dp"
-            android:layout_marginBottom="353dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginBottom="345dp"
             android:layout_toEndOf="@+id/tvKeywords"
             android:ems="10"
             android:textSize="24sp" />

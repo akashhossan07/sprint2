@@ -38,6 +38,16 @@ public class UICaptionSearchTest {
         onView(withId(R.id.etToDateTime)).perform(clearText());
         onView(withId(R.id.etToDateTime)).perform(typeText("2021:10:01 23:45"), closeSoftKeyboard());
         onView(withId(R.id.etKeywords)).perform(typeText("BCIT"), closeSoftKeyboard());
+
+        onView(withId(R.id.fromLat)).perform(clearText());
+        onView(withId(R.id.fromLat)).perform(typeText("46"),closeSoftKeyboard());
+        onView(withId(R.id.toLat)).perform(clearText());
+        onView(withId(R.id.toLat)).perform(typeText("50"),closeSoftKeyboard());
+        onView(withId(R.id.fromLon)).perform(clearText());
+        onView(withId(R.id.fromLon)).perform(typeText("-122.0"),closeSoftKeyboard());
+        onView(withId(R.id.toLon)).perform(clearText());
+        onView(withId(R.id.toLon)).perform(typeText("-125.1"),closeSoftKeyboard());
+
         onView(withId(R.id.go)).perform(click());
         for (int i = 0; i <= 5; i++) {
             onView(withId(R.id.btnRight)).perform(click());
