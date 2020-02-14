@@ -133,7 +133,7 @@
             android:layout_marginBottom="342dp"
             android:layout_toEndOf="@+id/tvKeywords"
             android:ems="10"
-            android:hint="Search me Daddy ;p"
+            android:hint="Sajjad is daddy"
             android:textSize="18sp" />
 
         <Button
