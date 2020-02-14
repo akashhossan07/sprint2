@@ -41,8 +41,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginBottom="240dp"
             android:ems="10"
+            android:hint="From Latitude"
             android:inputType="textNoSuggestions"
-            android:text="From Latitude"
             android:textSize="18sp" />
 
         <EditText
@@ -54,8 +54,8 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="190dp"
             android:ems="10"
+            android:hint="To Longitude"
             android:inputType="textNoSuggestions"
-            android:text="To Longitude"
             android:textSize="18sp" />
 
         <EditText
@@ -67,8 +67,8 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="240dp"
             android:ems="10"
+            android:hint="To Latitude"
             android:inputType="textNoSuggestions"
-            android:text="To Latitude"
             android:textSize="18sp" />
 
         <EditText
@@ -80,8 +80,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginBottom="190dp"
             android:ems="10"
+            android:hint="From Longitude"
             android:inputType="textNoSuggestions"
-            android:text="From Longitude"
             android:textSize="18sp" />
 
         <TextView
@@ -120,20 +120,21 @@
             android:layout_alignStart="@+id/tvFromDateTime"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="14dp"
-            android:layout_marginBottom="348dp"
+            android:layout_marginBottom="353dp"
             android:text="Keywords: "
             android:textSize="24sp" />
 
         <EditText
             android:id="@+id/etKeywords"
-            android:layout_width="243dp"
+            android:layout_width="242dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="7dp"
-            android:layout_marginBottom="345dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="342dp"
             android:layout_toEndOf="@+id/tvKeywords"
             android:ems="10"
-            android:textSize="24sp" />
+            android:hint="Search me Daddy ;p"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btnCancel"
