@@ -20,11 +20,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -57,6 +59,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     // static final int REQUEST_IMAGE_CAPTURE = 1;//SA
     //  String mCurrentPhotoPath;//SA
+    RelativeLayout mainLayout;
     public static final int SEARCH_ACTIVITY_REQUEST_CODE = 0;
     static final int CAMERA_REQUEST_CODE = 1;
     private String currentPhotoPath = null;
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ActivityCompat.requestPermissions(this,new String[]{ACCESS_FINE_LOCATION}, 1);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-
+        mainLayout = findViewById(R.id.mainLayout);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button btnLeft = (Button) findViewById(R.id.btnLeft);
@@ -159,13 +162,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     fileLongitudeNumber = 0;
                 }
 
-                Log.d("fuck", fromLatitudeNumber + "_" + toLatitudeNumber);
-                Log.d("fuckstring", fromLatitude + "_" + toLatitude);
+                Log.d("fuck", fromLongitudeNumber + "_" + toLongitudeNumber);
+                Log.d("fuckstring", fromLongitude + "_" + fromLongitude);
 
                 if (((minDate == null && maxDate == null) || (f.lastModified() >= minDate.getTime() && f.lastModified() <= maxDate.getTime()))
                         && (keywords == "" || f.getPath().contains(keywords))
                         && ((fromLatitude == null && toLatitude == null) || (fileLatitudeNumber >= fromLatitudeNumber && fileLatitudeNumber <= toLatitudeNumber))
-                        && ((fromLongitude == null && toLongitude == null) || (fileLongitudeNumber >= fromLongitudeNumber && fromLongitudeNumber <= toLongitudeNumber)))
+                        && ((fromLongitude == null && toLongitude == null) || (fileLongitudeNumber >= fromLongitudeNumber && fileLongitudeNumber <= toLongitudeNumber)))
                     photoGallery.add(f.getPath());
             }
 
@@ -329,7 +332,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 currentPhotoIndex = 0;
                 photoGallery = populateGallery(startTimestamp, endTimestamp, keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
                 if (photoGallery.size() == 0) {
-                    displayPhoto(null);
+                    photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "", "", "", "", "");
+                    displayPhoto(photoGallery.get(currentPhotoIndex));
                 } else {
                     displayPhoto(photoGallery.get(currentPhotoIndex));
                 }
