@@ -127,5 +127,30 @@
         android:text="Latitude"
         android:textSize="18sp" />
 
+    <Button
+        android:id="@+id/UploadS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="28dp"
+        android:onClick="UploadButton"
+        android:text="Upload" />
+
+    <TextView
+        android:id="@+id/UploadStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="39dp"
+        android:layout_marginLeft="39dp"
+        android:layout_marginBottom="7dp"
+        android:text="Upload Status" />
+
 
 </RelativeLayout>
