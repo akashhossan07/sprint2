@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText timeIndication;
     TextView latIndication;
     TextView longIndication;
+    TextView currentLatitudeView;
+    TextView currentLongitudeView;
 
     String keywords = "";
     String fromLatitude = "";
@@ -84,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btnLeft = (Button) findViewById(R.id.btnLeft);
         Button btnRight = (Button) findViewById(R.id.btnRight);
         Button btnSearch = (Button) findViewById(R.id.btnSearch);
+
         btnLeft.setOnClickListener(this);
         btnRight.setOnClickListener(this);
         btnSearch.setOnClickListener(filterListener);
@@ -213,6 +216,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         timeIndication = (EditText) findViewById(R.id.editText4);
         latIndication = (TextView) findViewById(R.id.lat);
         longIndication = (TextView) findViewById(R.id.lon);
+        currentLatitudeView = (TextView) findViewById(R.id.currentLat);
+        currentLongitudeView = (TextView) findViewById(R.id.currentLon);
 
         if (photoGallery.size() == 0) {
             photoCaption.setEnabled(false);
@@ -232,6 +237,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             photoCaption.setText(currentData[2]);
             latIndication.setText(currentData[3]);
             longIndication.setText(currentData[4]);
+
+            fusedLocationClient.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if(location != null){
+                        currentLatitudeView.setText(Double.toString(location.getLatitude()));
+                        currentLongitudeView.setText(Double.toString(location.getLongitude()));
+                    }
+                }
+            });
 
 
             //try {

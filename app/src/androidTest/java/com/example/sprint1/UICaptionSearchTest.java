@@ -53,7 +53,7 @@ public class UICaptionSearchTest {
             onView(withId(R.id.btnRight)).perform(click());
         }
 
-        for (int i = 0; i <= 8; i++) {
+        for (int i = 0; i <= 5; i++) {
             onView(withId(R.id.btnLeft)).perform(click());
         }
     }
