@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,14 +28,22 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -363,6 +372,85 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d("CreateImageFile",currentPhotoPath);
         Log.d("Image File NAme",imageFileName);
         return image;
+    }
+
+
+    /** Upload is pressed */
+    public void UploadButton(View v) {
+        Upload Upload = new Upload();
+        Upload.execute( currentPhotoPath );
+    }
+
+
+    /** Connect to google Drive Server and upload Picture **/
+    private class Upload extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... Img) {
+
+            final String Upload_URL = " https://www.googleapis.com/upload/drive/v3/files/\n";
+            String token = "ya29.Il-9B_ZdtQN6DZ3cmI0A-0w8p0KTrkOoQHLdiWclMyDySSioW7bP8lB49jcx2iUWRATLju16k-HifQt63K8TOt5dcJKcfqJ3THDqDjy_pNcc2fs8OkYlbuP-WMGbw0KkHg";
+            final File Image = new File(currentPhotoPath);
+            final int BufferSize = 4096;
+
+            HttpsURLConnection urlConnection;
+            String serverResponse = "Connect Upload";
+
+            try {
+
+                URL urltrue = new URL(Upload_URL);
+
+                urlConnection = (HttpsURLConnection) urltrue.openConnection();
+                urlConnection.setRequestProperty("Authorization", "Bearer " + token);
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setUseCaches(false);
+                urlConnection.setDoOutput(true);
+
+                // Get image name
+                urlConnection.setRequestProperty("Filename", Image.getName());
+
+                //open output stream for writing data
+                OutputStream out = urlConnection.getOutputStream();
+
+                // Open input stream for reading data
+                FileInputStream InputFile = new FileInputStream(Image);
+
+                byte[] buffer = new byte[(int) BufferSize];
+
+                int bytesRead = -1;
+
+                while((bytesRead = InputFile.read(buffer)) != -1){
+                    out.write(buffer, 0, bytesRead);
+                }
+                out.close();
+                InputFile.close();
+
+                // Check HTTP Response code (usefull for errors)
+                int responseCode = urlConnection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK){
+                    //read server response
+                    BufferedReader Reader = new BufferedReader(new InputStreamReader(
+                            urlConnection.getInputStream()
+                    ));
+
+                    serverResponse = "Upload success, Code: " + responseCode;
+                    Log.d("Server Response",serverResponse);
+                } else {
+                    Log.d("Server Response","Server Response's non-okay: " + responseCode);
+                    serverResponse = "Upload failed, Code: " + responseCode;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return serverResponse;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            TextView response = findViewById(R.id.UploadStatus);
+            response.setText(result);
+        }
     }
 }
 

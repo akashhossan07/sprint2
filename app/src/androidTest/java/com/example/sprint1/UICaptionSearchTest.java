@@ -44,9 +44,9 @@ public class UICaptionSearchTest {
         onView(withId(R.id.toLat)).perform(clearText());
         onView(withId(R.id.toLat)).perform(typeText("50"),closeSoftKeyboard());
         onView(withId(R.id.fromLon)).perform(clearText());
-        onView(withId(R.id.fromLon)).perform(typeText("-122.0"),closeSoftKeyboard());
+        onView(withId(R.id.fromLon)).perform(typeText("-150.0"),closeSoftKeyboard());
         onView(withId(R.id.toLon)).perform(clearText());
-        onView(withId(R.id.toLon)).perform(typeText("-125.1"),closeSoftKeyboard());
+        onView(withId(R.id.toLon)).perform(typeText("0"),closeSoftKeyboard());
 
         onView(withId(R.id.go)).perform(click());
         for (int i = 0; i <= 5; i++) {
