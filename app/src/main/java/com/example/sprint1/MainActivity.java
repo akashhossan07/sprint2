@@ -314,6 +314,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 currentPhotoIndex = 0;
                 photoGallery = populateGallery(startTimestamp, endTimestamp, keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
                 if (photoGallery.size() == 0) {
+                    Snackbar.make(findViewById(R.id.mainLayout), "Sajjad Messed Up, No Result Found", Snackbar.LENGTH_LONG).show();
                     photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "", "", "", "", "");
                     displayPhoto(photoGallery.get(currentPhotoIndex));
                 } else {
