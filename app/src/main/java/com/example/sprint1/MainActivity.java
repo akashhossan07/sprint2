@@ -403,7 +403,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected String doInBackground(String... Img) {
 
             final String Upload_URL = " https://www.googleapis.com/upload/drive/v3/files/\n";
-            String token = "ya29.Il-9B_ZdtQN6DZ3cmI0A-0w8p0KTrkOoQHLdiWclMyDySSioW7bP8lB49jcx2iUWRATLju16k-HifQt63K8TOt5dcJKcfqJ3THDqDjy_pNcc2fs8OkYlbuP-WMGbw0KkHg";
+            String token = "ya29.Il-9By75HUvoL_KFQJxlI0eJjkcJfEIpebgkY9AjMN898QJ2zl8JXDSL59Nz8k85L9tKtAs8Pcv4vDCFVxqkNEwO8_dJ_5-arl-pxOWei57KEsUp2YfzUSW_A6ib8nLJuA";
             final File Image = new File(currentPhotoPath);
             final int BufferSize = 4096;
 
