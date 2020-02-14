@@ -31,7 +31,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="100dp"
         android:text="left" />
 
     <Button
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="40dp"
         android:onClick="takePicture"
         android:text="snap" />
 
@@ -72,12 +72,11 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnSnap"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="120dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:singleLine="false"
         android:hint="Enter Caption Here"
-        />
+        android:inputType="textPersonName"
+        android:singleLine="false" />
 
     <EditText
         android:id="@+id/editText4"
@@ -85,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-25dp"
+        android:layout_marginBottom="-5dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textAlignment="center"
@@ -99,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="100dp"
         android:text="search"
         tools:layout_editor_absoluteX="291dp"
         tools:layout_editor_absoluteY="635dp" />
@@ -111,7 +110,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="34dp"
-        android:layout_marginBottom="135dp"
+        android:layout_marginBottom="155dp"
         android:text="Longitude"
         android:textAlignment="textEnd"
         android:textSize="18sp" />
@@ -123,9 +122,43 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="34dp"
-        android:layout_marginBottom="134dp"
+        android:layout_marginBottom="154dp"
         android:text="Latitude"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/currentLat"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginBottom="0dp"
+        android:text="Latitude"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/currentLocation"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="Current Location"
+        android:textAlignment="center"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/currentLon"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="0dp"
+        android:text="Longitude"
+        android:textAlignment="textEnd"
+        android:textSize="14sp" />
 
 
 </RelativeLayout>
