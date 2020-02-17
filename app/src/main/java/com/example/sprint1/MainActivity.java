@@ -1,4 +1,5 @@
 package com.example.sprint1;
+import com.example.sprint1.SupportPackage.Gallery_UtilityClass;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +9,6 @@ import androidx.core.content.FileProvider;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -93,10 +94,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Date minDate = new Date(Long.MIN_VALUE);
         Date maxDate = new Date(Long.MAX_VALUE);
-
         Log.d("min date is ", minDate.toString());
         Log.d("max date is", maxDate.toString());
-        photoGallery = populateGallery(minDate, maxDate, keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
+      //  photoGallery = populateGallery(minDate, maxDate, keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
+        photoGallery = Gallery_UtilityClass.populateGallery(minDate, maxDate, keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
         Log.d("onCreate, size", Integer.toString(photoGallery.size()));
         if (photoGallery.size() > 0)
             currentPhotoPath = photoGallery.get(currentPhotoIndex);
@@ -104,71 +105,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private ArrayList<String> populateGallery(Date minDate, Date maxDate,String keywords, String fromLatitude, String toLatitude, String fromLongitude, String toLongitude) {
-        File file = new File(Environment.getExternalStorageDirectory()
-                .getAbsolutePath(), "/Android/data/com.example.sprint1/files/Pictures");
-        photoGallery = new ArrayList<String>();
-        File[] fList = file.listFiles();
-        if (fList != null) {
-            for (File f : fList) {
-                String filePathData[] = f.getPath().toString().split("_");
-                double fromLatitudeNumber;
-                double toLatitudeNumber;
-                double fileLatitudeNumber;
-
-                double fromLongitudeNumber;
-                double toLongitudeNumber;
-                double fileLongitudeNumber;
-
-                try{
-                    fromLatitudeNumber = Float.parseFloat(fromLatitude);
-                } catch (Exception ex) {
-                    fromLatitudeNumber = -180;
-                }
-
-                try{
-                    toLatitudeNumber = Float.parseFloat(toLatitude);
-                } catch (Exception ex) {
-                    toLatitudeNumber = 180;
-                }
-
-                try{
-                    fileLatitudeNumber = Float.parseFloat(filePathData[3]);
-                } catch (Exception ex) {
-                    fileLatitudeNumber = 0;
-                }
-
-                try{
-                    fromLongitudeNumber = Float.parseFloat(fromLongitude);
-                } catch (Exception ex) {
-                    fromLongitudeNumber = -180;
-                }
-
-                try{
-                    toLongitudeNumber = Float.parseFloat(toLongitude);
-                } catch (Exception ex) {
-                    toLongitudeNumber = 180;
-                }
-
-                try{
-                    fileLongitudeNumber = Float.parseFloat(filePathData[4]);
-                } catch (Exception ex) {
-                    fileLongitudeNumber = 0;
-                }
-
-                Log.d("fuck", fromLongitudeNumber + "_" + toLongitudeNumber);
-                Log.d("fuckstring", fromLongitude + "_" + fromLongitude);
-
-                if (((minDate == null && maxDate == null) || (f.lastModified() >= minDate.getTime() && f.lastModified() <= maxDate.getTime()))
-                        && (keywords == "" || f.getPath().contains(keywords))
-                        && ((fromLatitude == null && toLatitude == null) || (fileLatitudeNumber >= fromLatitudeNumber && fileLatitudeNumber <= toLatitudeNumber))
-                        && ((fromLongitude == null && toLongitude == null) || (fileLongitudeNumber >= fromLongitudeNumber && fileLongitudeNumber <= toLongitudeNumber)))
-                    photoGallery.add(f.getPath());
-            }
-
-        }
-        return photoGallery;
-    }
 
     @Override
     public void onResume() {
@@ -176,11 +112,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
     }
 
-    public void onClick(View v) {
+    public void onClick(View v)  {
         updatePhoto(currentPhotoPath, photoCaption.getText().toString());
         Date minDate = new Date(Long.MIN_VALUE);
         Date maxDate = new Date(Long.MAX_VALUE);
-        photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
+        //photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
+        photoGallery = Gallery_UtilityClass.populateGallery(new Date(Long.MIN_VALUE), new Date(), keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
         switch (v.getId()) {
             case R.id.btnLeft:
                 if (photoGallery.size() > 0) //SA
@@ -248,23 +185,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
 
-
-            //try {
-            //    final ExifInterface location = new ExifInterface(currentPhotoPath);
-            //    Log.d("location", currentPhotoPath);
-            //    Log.d("Latitude", location.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF));
-            //    Log.d("Longitude", (location.getAttribute(ExifInterface.TAG_GPS_LONGITUDE)).toString());
-            //    latIndication.setText(location.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF) + " " + location.getAttribute(ExifInterface.TAG_GPS_LATITUDE));
-            //    longIndication.setText(location.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF) + " " + location.getAttribute(ExifInterface.TAG_GPS_LONGITUDE));
-            //} catch (IOException e) {
-                //logger.info("Couldn't read exif info: " + e.getLocalizedMessage());
-            //}
-
         }
     }
 
     private void updatePhoto(String path, String caption) {
         if (currentPhotoIndex < photoGallery.size()) {
+
             String[] attr = path.split("_");
             if (attr.length >= 3) {
                 File to = new File(attr[0] + "_" + attr[1] + "_" + caption + "_" + attr[3] + "_" + attr[4]+ "_" + attr[5]);
@@ -280,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onClick(View v) {
             Intent i = new Intent(MainActivity.this, SearchActivity.class);
             startActivityForResult(i, SEARCH_ACTIVITY_REQUEST_CODE);
+
         }
     };
 
@@ -336,10 +263,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 currentPhotoIndex = 0;
-                photoGallery = populateGallery(startTimestamp, endTimestamp, keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
+                //photoGallery = populateGallery(startTimestamp, endTimestamp, keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
+                photoGallery = Gallery_UtilityClass.populateGallery(startTimestamp, endTimestamp, keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);;
                 if (photoGallery.size() == 0) {
                     Snackbar.make(findViewById(R.id.mainLayout), "Sajjad Messed Up, No Result Found", Snackbar.LENGTH_LONG).show();
-                    photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "", "", "", "", "");
+                   // photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "", "", "", "", "");
+                    photoGallery = Gallery_UtilityClass.populateGallery(new Date(Long.MIN_VALUE), new Date(), "", "", "", "", "");
                     displayPhoto(photoGallery.get(currentPhotoIndex));
                 } else {
                     displayPhoto(photoGallery.get(currentPhotoIndex));
@@ -350,8 +279,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             ImageView iv = (ImageView) findViewById(R.id.ivGallery);
             iv.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath));
-           photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "", "", "", "", "");
-           photoCaption.setText("");
+          // photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), "", "", "", "", "");
+            photoGallery = Gallery_UtilityClass.populateGallery(new Date(Long.MIN_VALUE), new Date(), "", "", "", "", "");
+            photoCaption.setText("");
             final Path myPath = Paths.get(currentPhotoPath);
             // call getFileName() and get FileName path object
             final Path filePath = myPath.getFileName();
