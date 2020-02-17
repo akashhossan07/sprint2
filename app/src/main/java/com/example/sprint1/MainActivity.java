@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -322,8 +323,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /** Upload is pressed */
     public void UploadButton(View v) {
-        Upload Upload = new Upload();
-        Upload.execute( currentPhotoPath );
+        if (currentPhotoIndex < photoGallery.size()) {
+            Upload Upload = new Upload();
+            Upload.execute(currentPhotoPath);
+        }else{
+            Snackbar.make(findViewById(R.id.mainLayout), "SORRY! No photo to upload.", Snackbar.LENGTH_LONG).show();
+        }
     }
 
 
