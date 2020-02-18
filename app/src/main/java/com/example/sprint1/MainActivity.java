@@ -87,6 +87,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Log.d("min date is ", minDate.toString());
         Log.d("max date is", maxDate.toString());
+
+
+
         photoGallery = populateGallery(minDate, maxDate, keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
         Log.d("onCreate, size", Integer.toString(photoGallery.size()));
         if (photoGallery.size() > 0)
@@ -233,8 +236,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onSuccess(Location location) {
                     if(location != null){
-                        currentLatitudeView.setText(Double.toString(location.getLatitude()));
-                        currentLongitudeView.setText(Double.toString(location.getLongitude()));
+                        currentLatitude = Double.toString(location.getLatitude());
+                        currentLongiutde = Double.toString(location.getLongitude());
+                        currentLatitudeView.setText(currentLatitude);
+                        currentLongitudeView.setText(currentLongiutde);
                     }
                 }
             });
@@ -359,15 +364,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm").format(new Date());
         //Get input from user
 
+
         fusedLocationClient.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if(location != null){
+                if (location != null) {
                     currentLatitude = Double.toString(location.getLatitude());
                     currentLongiutde = Double.toString(location.getLongitude());
                 }
             }
         });
+
 
         imageFileName = "JPEG_" + timeStamp + "_ _" + currentLatitude + "_" + currentLongiutde + "_";
         //text_1.setText( imageFileName,TextView.BufferType.EDITABLE);
