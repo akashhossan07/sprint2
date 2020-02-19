@@ -11,8 +11,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Gallery_UtilityClass extends AppCompatActivity {
+public class Gallery_UtilityClass {
+
     public static ArrayList<String> photoGallery = null;
+
     public static ArrayList<String> populateGallery(Date minDate, Date maxDate, String keywords, String fromLatitude, String toLatitude, String fromLongitude, String toLongitude) {
         File file = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath(), "/Android/data/com.example.sprint1/files/Pictures");
