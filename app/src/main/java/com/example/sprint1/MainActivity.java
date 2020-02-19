@@ -8,6 +8,7 @@ import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btnRight = (Button) findViewById(R.id.btnRight);
         Button btnSearch = (Button) findViewById(R.id.btnSearch);
 
+
         btnLeft.setOnClickListener(this);
         btnRight.setOnClickListener(this);
         btnSearch.setOnClickListener(filterListener);
@@ -117,6 +119,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updatePhoto(currentPhotoPath, photoCaption.getText().toString());
         Date minDate = new Date(Long.MIN_VALUE);
         Date maxDate = new Date(Long.MAX_VALUE);
+        TextView response = findViewById(R.id.UploadStatus);
+        response.setTextColor(Color.GRAY);
+        response.setText("Upload Status");
         //photoGallery = populateGallery(new Date(Long.MIN_VALUE), new Date(), keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
         photoGallery = Gallery_UtilityClass.populateGallery(new Date(Long.MIN_VALUE), new Date(), keywords, fromLatitude, toLatitude, fromLongitude, toLongitude);
         switch (v.getId()) {
@@ -180,8 +185,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onSuccess(Location location) {
                     if(location != null){
-                        currentLatitudeView.setText(Double.toString(location.getLatitude()));
-                        currentLongitudeView.setText(Double.toString(location.getLongitude()));
+                        currentLatitude = Double.toString(location.getLatitude());
+                        currentLongiutde = Double.toString(location.getLongitude());
+                        currentLatitudeView.setText(currentLatitude);
+                        currentLongitudeView.setText(currentLongiutde);
                     }
                 }
             });
@@ -327,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Upload Upload = new Upload();
             Upload.execute(currentPhotoPath);
         }else{
-            Snackbar.make(findViewById(R.id.mainLayout), "SORRY! No photo to upload.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(R.id.mainLayout), "Sajjad Messed Up Again! No photo to upload.", Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -338,7 +345,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected String doInBackground(String... Img) {
 
             final String Upload_URL = " https://www.googleapis.com/upload/drive/v3/files/\n";
-            String token = "ya29.Il-9By75HUvoL_KFQJxlI0eJjkcJfEIpebgkY9AjMN898QJ2zl8JXDSL59Nz8k85L9tKtAs8Pcv4vDCFVxqkNEwO8_dJ_5-arl-pxOWei57KEsUp2YfzUSW_A6ib8nLJuA";
+            String token = "ya29.Il-9B6zlF2Ixp1_pY4IoUeit7i1to7yH11PGcUZOhfflew7bCDUDu3a1VfZiV8sfaPcFEUM5K-2F6_ufiivGx5eLEMrLkajcXcWGX_sPVk0wx5-GeQuDwPncL17O2SWGLA";
             final File Image = new File(currentPhotoPath);
             final int BufferSize = 4096;
 
@@ -399,6 +406,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected void onPostExecute(String result) {
             TextView response = findViewById(R.id.UploadStatus);
+            if(result.contains("success"))
+                response.setTextColor(Color.GREEN);
+            if(result.contains("failed"))
+                response.setTextColor(Color.RED);
             response.setText(result);
         }
     }

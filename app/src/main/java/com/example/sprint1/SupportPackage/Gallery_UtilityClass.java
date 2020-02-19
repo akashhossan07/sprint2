@@ -67,8 +67,6 @@ public class Gallery_UtilityClass {
                     fileLongitudeNumber = 0;
                 }
 
-                Log.d("fuck", fromLongitudeNumber + "_" + toLongitudeNumber);
-                Log.d("fuckstring", fromLongitude + "_" + fromLongitude);
 
                 if (((minDate == null && maxDate == null) || (f.lastModified() >= minDate.getTime() && f.lastModified() <= maxDate.getTime()))
                         && (keywords == "" || f.getPath().contains(keywords))
